@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartu Ulang Tahun</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .heart {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            background-color: #e3342f;
+            transform: rotate(-45deg);
+            box-shadow: -10px 10px 90px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .heart:hover {
+            transform: rotate(-45deg) scale(1.1);
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background-color: #e3342f;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -60px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 60px;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gradient-to-r from-pink-400 to-yellow-300">
+    <div id="envelope" class="relative flex items-center justify-center cursor-pointer" onclick="openCard()">
+        <div class="heart"></div>
+        <p class="absolute text-white font-bold text-lg z-10"></p>
+    </div>
+
+    <div id="card"
+        class="hidden bg-white p-8 rounded-2xl shadow-2xl text-center transform transition duration-500 scale-0">
+        <div class="text-6xl animate-bounce">🎉🎂🎈</div>
+        <h1 class="text-3xl font-bold text-red-500 mt-4">Selamat Ulang Tahun, Nomi!</h1>
+        <p class="text-xl text-gray-700 font-semibold mt-2">Nomi</p>
+        <img src="img.jpg" alt="Gambar Lucu"
+            class="mx-auto mt-4 w-35 h-40 rounded-full border-4 border-pink-500 shadow-lg">
+        <p class="text-lg text-gray-600 mt-4">Semoga hari spesial ini penuh dengan kebahagiaan, cinta, dan tawa. Semoga
+            semua impianmu tercapai! 🎁✨</p>
+        <button onclick="confetti()"
+            class="mt-6 px-6 py-2 bg-red-500 text-white font-bold rounded-lg hover:bg-red-700 transition">Rayakan!
+            🎊</button>
+    </div>
+
+    <script>
+        function openCard() {
+            document.getElementById('envelope').classList.add('hidden');
+            const card = document.getElementById('card');
+            card.classList.remove('hidden');
+            setTimeout(() => card.classList.remove('scale-0'), 50);
+            confetti();
+        }
+
+        function confetti() {
+            const emojis = ['❤️', '💖', '💕', '💓', '💘'];
+            for (let i = 0; i < 50; i++) {
+                const emoji = document.createElement('div');
+                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.position = 'absolute';
+                emoji.style.left = Math.random() * window.innerWidth + 'px';
+                emoji.style.top = '-50px';
+                emoji.style.fontSize = Math.random() * 20 + 30 + 'px';
+                emoji.style.opacity = Math.random();
+                emoji.style.transition = 'transform 4s ease-out, opacity 4s ease-out';
+                document.body.appendChild(emoji);
+
+                setTimeout(() => {
+                    emoji.style.transform = `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`;
+                    emoji.style.opacity = 0;
+                }, 100);
+
+                setTimeout(() => emoji.remove(), 4000);
+            }
+        }
+    </script>
+</body>
+
+</html>
